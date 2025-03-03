@@ -1,3 +1,4 @@
+// navigation.js
 function openNav() {
     document.getElementById("myTopnav").style.height = "50px"; // Updated height
 }
@@ -6,10 +7,9 @@ function closeNav() {
     document.getElementById("myTopnav").style.height = "0";
 }
 
-const x = document.getElementById("webpage");
-
+// weather.js
 function getWeather(latitude, longitude) {
-    const apiKey = 'ba9bdf9c9247484b9c5162526250203'; // API key
+    const apiKey = 'YOUR_API_KEY_HERE'; // Use a secure method to handle your API key
     const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${latitude},${longitude}`;
 
     fetch(url)
@@ -35,10 +35,7 @@ function getLocation() {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
             getWeather(latitude, longitude);
-        }, error => {
-            console.error('Error getting location:', error);
-            document.getElementById('weather-info').innerHTML = '<p>Unable to retrieve location. Please enable location services and try again.</p>';
-        });
+        }, showError);
     } else {
         console.error('Geolocation is not supported by this browser.');
         document.getElementById('weather-info').innerHTML = '<p>Geolocation is not supported by this browser.</p>';
@@ -47,20 +44,20 @@ function getLocation() {
 
 document.addEventListener('DOMContentLoaded', getLocation);
 
-//Error handling for LOCATION and Weather REQUEST
 function showError(error) {
+    const locationElement = document.getElementById("location");
     switch (error.code) {
         case error.PERMISSION_DENIED:
-            document.getElementById("location").innerHTML = "Your Geolocation request was denied. Try again & Select allow.";
+            locationElement.innerHTML = "Your geolocation request was denied. Please enable location services and try again.";
             break;
         case error.POSITION_UNAVAILABLE:
-            document.getElementById("location").innerHTML = "Location information is unavailable.Try again later.";
+            locationElement.innerHTML = "Location information is unavailable. Please try again later.";
             break;
         case error.TIMEOUT:
-            document.getElementById("location").innerHTML = "Location Request has timed out.";
+            locationElement.innerHTML = "The location request has timed out. Please try again.";
             break;
         case error.UNKNOWN_ERROR:
-            document.getElementById("location").innerHTML = "An unknown error occurred.";
+            locationElement.innerHTML = "An unknown error occurred. Please try again.";
             break;
     }
 }
