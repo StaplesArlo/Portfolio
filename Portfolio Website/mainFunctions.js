@@ -9,15 +9,14 @@ function closeNav() {
 
 // weather.js
 function getWeather(latitude, longitude) {
-    const apiKey = 'YOUR_API_KEY_HERE'; // Use a secure method to handle your API key
+    const apiKey = 'ba9bdf9c9247484b9c5162526250203'; // Use a secure method to handle your API key
     const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${latitude},${longitude}`;
 
     fetch(url)
         .then(response => response.json())
         .then(data => {
             const weatherInfo = document.getElementById('weather-info');
-            weatherInfo.innerHTML = `
-                <h2>${data.location.name}</h2>
+            weatherInfo.innerHTML = `<h2>${data.location.name}</h2>
                 <h4>Temperature: ${data.current.temp_c}°C</h4>
                 <h4>${data.current.condition.text}</h4>
                 <h4>Wind: ${data.current.wind_kph} km/h</h4>
